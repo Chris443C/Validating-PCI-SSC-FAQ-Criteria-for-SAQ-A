@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, jsonify, send_file
 import os
 import subprocess
-import requests
-import pandas as pd
 
 app = Flask(__name__)
 
@@ -34,9 +32,6 @@ def scan():
     # Run w3af Scan
     w3af_result = run_command(f'python3 scripts/w3af_scan.py {url}')
 
-    # Run Bandit Scan
-    bandit_result = run_command(f'python3 scripts/bandit_scan.py {url}')
-
     # Combine results
     report_path = os.path.join(REPORTS_DIR, 'scan_report.txt')
     with open(report_path, 'w') as report_file:
@@ -46,10 +41,30 @@ def scan():
         report_file.write(nikto_result)
         report_file.write('\n\nw3af Scan Results:\n')
         report_file.write(w3af_result)
-        report_file.write('\n\nBandit Scan Results:\n')
-        report_file.write(bandit_result)
 
     return jsonify({'message': 'Scan completed', 'report': report_path})
+
+@app.route('/bandit_scan', methods=['POST'])
+def bandit_scan():
+    target_directory = request.form.get('target_directory')
+    if not target_directory:
+        return jsonify({'error': 'Target directory is required'}), 400
+
+    # Ensure the target directory exists
+    if not os.path.isdir(target_directory):
+        return jsonify({'error': f'Target directory {target_directory} does not exist'}), 400
+
+    # Define the output report path
+    report_path = os.path.join(REPORTS_DIR, 'bandit_report.txt')
+
+    # Run Bandit scan
+    bandit_result = run_command(f'python3 scripts/bandit_scan.py {target_directory}')
+
+    # Save the Bandit scan result to the report file
+    with open(report_path, 'w') as report_file:
+        report_file.write(bandit_result)
+
+    return jsonify({'message': 'Bandit scan completed', 'report': report_path})
 
 @app.route('/download/<filename>')
 def download(filename):
