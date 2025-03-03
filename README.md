@@ -21,8 +21,8 @@ pip install -r requirements.txt
 
 ## Ensure external tools are installed:
 
-Nikto: Installation Guide
-w3af: Installation Guide
+Nikto: [Installation Guide](https://cirt.net/Nikto2)
+w3af: [Installation Guide](https://docs.w3af.org/en/stable/install.html)
 
 ## Usage
 1. Start the Flask application:
