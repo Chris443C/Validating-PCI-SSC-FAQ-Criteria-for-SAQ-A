@@ -38,28 +38,9 @@ Perform a scan:
 
 Enter the URL of the payment page you wish to scan.
 Click "Start Scan" and wait for the results.
-Contributing
+
+## Contributing
 Contributions are welcome! Please read the CONTRIBUTING.md for guidelines.
 
-License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-yaml
-Copy
-Edit
-:contentReference[oaicite:20]{index=20}
-
----
-
-### 3. `.gitignore` - Git Ignore File
-
-:contentReference[oaicite:21]{index=21}&#8203;:contentReference[oaicite:22]{index=22}
-
-
-```plaintext
-__pycache__/
-*.pyc
-.env
-venv/
-logs/
-reports/
