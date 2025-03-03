@@ -5,24 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Scanner</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const socket = io();
+
+            socket.on('connect', () => {
+                console.log('Connected to server');
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Disconnected from server');
+            });
+
+            const scanForm = document.getElementById('scan-form');
+            const banditScanForm = document.getElementById('bandit-scan-form');
+            const resultDiv = document.getElementById('result');
+
+            function handleFormSubmit(form, endpoint) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    resultDiv.innerHTML = 'Processing... Please wait.';
+
+                    const formData = new FormData(form);
+                    fetch(endpoint, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            resultDiv.innerHTML = `<span style="color: red;">Error: ${data.error}</span>`;
+                        } else {
+                            resultDiv.innerHTML = `
+                                <p>Operation completed. <a href="/download/${data.report}">Download Report</a></p>
+                                <pre>${data.output || ''}</pre>
+                            `;
+                        }
+                    })
+                    .catch(error => {
+                        resultDiv.innerHTML = `<span style="color: red;">An error occurred: ${error.message}</span>`;
+                    });
+                });
+            }
+
+            handleFormSubmit(scanForm, '/scan');
+            handleFormSubmit(banditScanForm, '/bandit_scan');
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Payment Page Security Scanner</h1>
-        <!-- Existing Scan Form -->
         <form id="scan-form">
             <label for="url">Enter Payment Page URL:</label>
             <input type="url" id="url" name="url" required>
-            <button type="submit">Start Scan</button>
-        </form>
-        <!-- New Bandit Scan Form -->
-        <form id="bandit-scan-form">
-            <label for="target_directory">Enter Target Directory for Bandit Scan:</label>
-            <input type="text" id="target_directory" name="target_directory" required>
-            <button type="submit">Start Bandit Scan</button>
-        </form>
-        <div id="result"></div>
-    </div>
-</body>
-</html>
+            <
+::contentReference[oaicite:16]{index=16}
+ 
