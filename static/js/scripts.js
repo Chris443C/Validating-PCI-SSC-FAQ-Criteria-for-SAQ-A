@@ -4,30 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        const url = document.getElementById('url').value;
+        resultDiv.innerHTML = 'Scanning... Please wait.';
 
-        resultDiv.innerHTML = '<p>Scanning in progress...</p>';
-
+        const formData = new FormData(form);
         fetch('/scan', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ url: url }),
+            body: formData
         })
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                resultDiv.innerHTML = `<span style="color: red;">Error: ${data.error}</span>`;
             } else {
                 resultDiv.innerHTML = `
-                    <p>Scan completed. <a href="/download/${data.report}" target="_blank">Download Report</a></p>
+                    <p>Scan completed. <a href="/download/${data.report}">Download Report</a></p>
                     <pre>${data.output}</pre>
                 `;
             }
         })
         .catch(error => {
-            resultDiv.innerHTML = `<p>An error occurred: ${error.message}</p>`;
+            resultDiv.innerHTML = `<span style="color: red;">An error occurred: ${error.message}</span>`;
         });
     });
 });
