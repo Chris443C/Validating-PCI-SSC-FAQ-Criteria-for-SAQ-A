@@ -10,11 +10,13 @@
 <body>
     <div class="container">
         <h1>Payment Page Security Scanner</h1>
+        <!-- Existing Scan Form -->
         <form id="scan-form">
             <label for="url">Enter Payment Page URL:</label>
             <input type="url" id="url" name="url" required>
             <button type="submit">Start Scan</button>
         </form>
+        <!-- New Bandit Scan Form -->
         <form id="bandit-scan-form">
             <label for="target_directory">Enter Target Directory for Bandit Scan:</label>
             <input type="text" id="target_directory" name="target_directory" required>
@@ -24,4 +26,3 @@
     </div>
 </body>
 </html>
-
