@@ -15,26 +15,23 @@ A web-based tool for scanning payment pages for script-based vulnerabilities.
    ```bash
    git clone https://github.com/your-username/security-scanner.git
    cd security-scanner
-Install dependencies:
+## Install dependencies:
 
-bash
-Copy
-Edit
 pip install -r requirements.txt
-Ensure external tools are installed:
+
+## Ensure external tools are installed:
 
 Nikto: Installation Guide
 w3af: Installation Guide
-Usage
-Start the Flask application:
 
-bash
-Copy
-Edit
+## Usage
+1. Start the Flask application:
+
 python app.py
-Access the web interface: Open your browser and navigate to http://127.0.0.1:5000.
 
-Perform a scan:
+2. Access the web interface: Open your browser and navigate to http://127.0.0.1:5000.
+
+3. Perform a scan:
 
 Enter the URL of the payment page you wish to scan.
 Click "Start Scan" and wait for the results.
